@@ -1,0 +1,11 @@
+{
+  "name": "tv-shows-library",
+  "version": "1.0.0",
+  "description": "HBO tv shows library",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js"
+  },
+  "author": "Julia Akimova",
+  "license": "MIT"
+}
