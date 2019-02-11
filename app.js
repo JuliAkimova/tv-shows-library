@@ -1,14 +1,19 @@
 //File for all middlewares and other stuff
 const express = require('express');
 const app = express();
-
+const bodyParser = require('body-parser');
 //require routes api file
 const routes = require('./routes/api');
 
+//body parser middleware
+app.use(bodyParser.json());
+
 /** Initialize routes */
 // Everything after 'api/' will use routes object
+app.use('/api/shows', routes);
 
-app.use('/api', routes);
+
+
 
 /**Error handle middleware */
 app.use((req, res, next) => {
