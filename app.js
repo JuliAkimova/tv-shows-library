@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 // Everything after 'api/' will use routes object
 app.use('/api/shows', routes);
 
-
-
+//public access to uploads folder
+app.use('/uploads', express.static('uploads'));
 
 /**Error handle middleware */
 app.use((req, res, next) => {
