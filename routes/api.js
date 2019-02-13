@@ -66,4 +66,37 @@ router.post('/', upload.single('posterImage'), (req, res, next) => {
         .catch(err => res.status(500).json({error: err}))
 });
 
+//@route GET api/shows
+//@desc Get all shows
+//@access Public
+router.get('/', (req, res, next) => {
+    Show.find({})
+        //.select('_id title subtitle...')
+        .then(docs => {
+            const response = {
+                count: docs.length,
+                shows: docs.map(doc => {
+                    return {
+                        _id: doc._id,
+                        title: doc.title,
+                        subtitle: doc.subtitle,
+                        dateOfStart: doc.dateOfStart,
+                        posterImage: doc.posterImage,
+                        longDescrition: doc.longDescrition,
+                        shortDescrition: doc.shortDescrition,
+                        priority: doc.priority,
+                        videoFragmentURL: doc.videoFragmentURL,
+                        request: {
+                            type: 'GET',
+                            url: `http://127.0.0.1:3000/api/shows/${doc._id}`
+                        }
+                    };
+                })
+
+            }; 
+            res.status(200).json(response);
+        })    
+        .catch(err => res.status(404).send(err)) 
+});
+
 module.exports = router;
