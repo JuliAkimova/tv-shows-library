@@ -120,4 +120,25 @@ router.get('/:showId', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }))
 });
 
+//@route PATCH api/items/:id
+//@desc Update a show
+//@access Public
+router.patch('/:showId', (req, res, next) => {
+    Show.findByIdAndUpdate({ _id: req.params.showId }, req.body)
+        .then(() => {
+            Show.findOne({ _id: req.params.showId })
+            .then(result => {
+                res.status(200).json({
+                    message: 'Show updated',
+                    title: result.title,
+                    request: {
+                        type: 'GET',
+                        url: `http://127.0.0.1:3000/api/shows/${req.params.showId}`
+                    }
+                })
+            })
+        .catch(err => res.status(500).json({ error: err }))    
+    });
+});
+
 module.exports = router;
