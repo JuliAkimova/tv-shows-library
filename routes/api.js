@@ -20,3 +20,10 @@ const upload = multer({
     }
 });
 
+//require show model
+const Show = require('../models/show');
+//require season model
+const Season = require('../models/season');
+//require episode model
+const Episode = require('../models/episode');
+
