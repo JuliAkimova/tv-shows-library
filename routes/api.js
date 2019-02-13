@@ -99,4 +99,25 @@ router.get('/', (req, res, next) => {
         .catch(err => res.status(404).send(err)) 
 });
 
+//@route GET api/shows/:id
+//@desc Get show with specific id
+//@access Public
+router.get('/:showId', (req, res, next) => {
+    Show.findById(req.params.showId)
+        .then(doc => {
+            if(doc) {
+                res.status(200).json({
+                    show: doc,
+                    request: {
+                        type: 'GET',
+                        url: `http://127.0.0.1:3000/api/shows`
+                    }
+                })
+            } else {
+                res.status(404).json({ massage: 'No valid entry found for provided ID' })
+            }
+        })
+        .catch(err => res.status(500).json({ error: err }))
+});
+
 module.exports = router;
