@@ -141,4 +141,17 @@ router.patch('/:showId', (req, res, next) => {
     });
 });
 
+//@route DELETE api/items/:id
+//@desc Delete a show
+//@access Public
+router.delete('/:showId', (req, res, next) => {
+    Show.findByIdAndRemove({ _id: req.params.showId })
+        .then(() => {
+            res.status(200).json({
+                message: 'Show deleted'
+            })
+        })
+        .catch(err => res.status(500).json({ deleted: false, error: err }))
+});
+
 module.exports = router;
