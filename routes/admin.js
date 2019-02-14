@@ -24,3 +24,30 @@ router.post('/signup', (req, res, next) => {
             })
             .catch(err => res.status(500).json({error: err}))
 });
+
+//@route POST admin/signin
+//@desc Administrator authentication
+//@access Public
+router.post('/signin', (req, res, next) => {
+    Admin.findOne({ email: req.body.email })
+         .then(admin => {
+            if(!admin) {
+                return res.status(401).json({
+                    message: 'Auth failed:('
+                })
+            }
+            if(admin.password !== req.body.password) {
+                return res.status(401).json({
+                    message: 'Auth failed:('
+                })
+            }
+            return res.status(200).json({
+                message: 'Auth successful'
+            })
+         })
+        .catch(err => res.status(500).json({error: err}))
+});
+
+
+
+module.exports = router;
