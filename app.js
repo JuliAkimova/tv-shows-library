@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 //require routes api file
 const routes = require('./routes/api');
-
+const adminRoutes = require('./routes/admin');
 //body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -12,6 +12,9 @@ app.use(bodyParser.json());
 /** Initialize routes */
 // Everything after 'api/' will use routes object
 app.use('/api/shows', routes);
+
+//Initialize admin routes
+app.use('/admin', adminRoutes);
 
 //public access to uploads folder
 app.use('/uploads', express.static('uploads'));
