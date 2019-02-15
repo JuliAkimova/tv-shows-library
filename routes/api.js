@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
+const checkAuth = require('./check-auth');
 
 //store images in dababase
 const storage = multer.diskStorage({
@@ -30,8 +31,8 @@ const Episode = require('../models/episode');
 
 //@route POST api/shows
 //@desc Create a show
-//@access Public
-router.post('/', upload.single('posterImage'), (req, res, next) => {
+//@access Private
+router.post('/', checkAuth, upload.single('posterImage'), (req, res, next) => {
     const show = new Show({
         _id: new mongoose.Types.ObjectId,
         title: req.body.title,
@@ -122,8 +123,8 @@ router.get('/:showId', (req, res, next) => {
 
 //@route PATCH api/items/:id
 //@desc Update a show
-//@access Public
-router.patch('/:showId', (req, res, next) => {
+//@access Private
+router.patch('/:showId', checkAuth, (req, res, next) => {
     Show.findByIdAndUpdate({ _id: req.params.showId }, req.body)
         .then(() => {
             Show.findOne({ _id: req.params.showId })
@@ -143,8 +144,8 @@ router.patch('/:showId', (req, res, next) => {
 
 //@route DELETE api/items/:id
 //@desc Delete a show
-//@access Public
-router.delete('/:showId', (req, res, next) => {
+//@access Private
+router.delete('/:showId', checkAuth, (req, res, next) => {
     Show.findByIdAndRemove({ _id: req.params.showId })
         .then(() => {
             res.status(200).json({
