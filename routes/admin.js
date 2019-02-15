@@ -11,14 +11,14 @@ const Admin = require('../models/admin');
 //@access Public
 router.post('/signup', (req, res, next) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
-        if(err) {
+        if (err) {
             return res.status(500).json({ error: err });
         } else {
             const admin = new Admin({
                 _id: new mongoose.Types.ObjectId(),
                 email: req.body.email,
                 password: hash
-                });
+            });
             admin
                 .save()
                 .then(result => {
@@ -37,24 +37,30 @@ router.post('/signup', (req, res, next) => {
 //@access Public
 router.post('/signin', (req, res, next) => {
     Admin.findOne({ email: req.body.email })
-         .then(admin => {
-            if(!admin) {
+    .then(admin => {
+        if (!admin) {
+            return res.status(401).json({
+                message: 'Auth failed'
+            });
+        }
+        bcrypt.compare(req.body.password, admin.password, (err, result) => {
+            if (err) {
                 return res.status(401).json({
-                    message: 'Auth failed:('
-                })
+                    message: 'Auth failed'
+                });
             }
-            if(admin.password !== req.body.password) {
-                return res.status(401).json({
-                    message: 'Auth failed:('
-                })
+            if (result) {
+                return res.status(200).json({
+                    message: 'Auth successful'
+            });
             }
-            return res.status(200).json({
-                message: 'Auth successful'
-            })
-         })
-        .catch(err => res.status(500).json({error: err}))
+            res.status(401).json({
+                message: 'Auth failed'
+            });
+        });
+    })
+    .catch(err => res.status(500).json({error: err}))
 });
-
 
 
 module.exports = router;
