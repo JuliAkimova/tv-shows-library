@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //Import admin model
 const Admin = require('../models/admin');
@@ -50,8 +51,19 @@ router.post('/signin', (req, res, next) => {
                 });
             }
             if (result) {
+                const token = jwt.sign(
+                    {
+                        email: admin.email,
+                        adminId: admin._id
+                    },
+                    'secret',
+                    {
+                        expiresIn: '1h'
+                    }    
+                 );
                 return res.status(200).json({
-                    message: 'Auth successful'
+                    message: 'Auth successful',
+                    token: token
             });
             }
             res.status(401).json({
