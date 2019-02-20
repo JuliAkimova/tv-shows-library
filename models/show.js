@@ -33,7 +33,6 @@ const ShowSchema = new Schema({
     },
     lastModifiedDate: {
         type: Date,
-        //default: Date.now
     },
     videoFragmentURL: {
         type: String
@@ -41,7 +40,10 @@ const ShowSchema = new Schema({
     rating: {
         type: Number
     },
-    seasons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Season'}]
+    seasons: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Season'
+    }]
 });
 
 module.exports = mongoose.model('Show', ShowSchema);

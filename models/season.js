@@ -10,10 +10,12 @@ const SeasonSchema = new Schema({
         required: true 
     },
     number: {
-        type: Number
+        type: Number,
+        required: true
     },
-    relatedShows: { 
-        type: mongoose.Schema.Types.ObjectId, ref: 'Show' 
+    relatedShow: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Show' 
     },
     longDescription: {
         type: String
@@ -30,7 +32,6 @@ const SeasonSchema = new Schema({
     },
     lastModifiedDate: {
         type: Date,
-        default: Date.now
     },
     videoFragmentURL: {
         type: String
@@ -38,7 +39,14 @@ const SeasonSchema = new Schema({
     rating: {
         type: Number
     },
-    episode: { type: mongoose.Schema.Types.ObjectId, ref: 'Episode' }
+    show: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Show'
+    },
+    episodes: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Episode'
+    }]
 });
 
 module.exports = mongoose.model('Season', SeasonSchema);

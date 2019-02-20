@@ -10,13 +10,16 @@ const EpisodeSchema = new Schema({
         required: true 
     },
     number: {
-        type: Number
+        type: Number,
+        required: true
     },
     relatedShow: { 
-        type: mongoose.Schema.Types.ObjectId, ref: 'Show'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Show'
     },
     relatedSeason: { 
-        type: mongoose.Schema.Types.ObjectId, ref: 'Season'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Season'
     },
     longDescription: {
         type: String
@@ -41,9 +44,10 @@ const EpisodeSchema = new Schema({
     rating: {
         type: Number
     },
+    season: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Season'
+    },
 });
 
-
-const episode = mongoose.model('Episode', EpisodeSchema);
- 
-module.exports = episode;
+module.exports = mongoose.model('Episode', EpisodeSchema);
