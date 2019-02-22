@@ -16,7 +16,18 @@ const ShowSchema = new Schema({
         type: Date
     },
     posterImage: {
-        type: String,
+        square: {
+            type: String,
+            required: true
+        },
+        wide: {
+            type: String,
+            required: true
+        },
+        extraWide: {
+            type: String,
+            required: true
+        } 
     },
     longDescription: {
         type: String

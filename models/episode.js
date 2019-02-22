@@ -28,7 +28,18 @@ const EpisodeSchema = new Schema({
         type: String
     },
     featuredImage: {
-        type: String
+        square: {
+            type: String,
+            required: true
+        },
+        wide: {
+            type: String,
+            required: true
+        },
+        extraWide: {
+            type: String,
+            required: true
+        } 
     },
     dateOfPublish: {
         type: Date,
