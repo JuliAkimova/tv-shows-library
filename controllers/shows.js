@@ -19,9 +19,13 @@ exports.get_all_shows = (req, res, next) => {
                         title: doc.title,
                         subtitle: doc.subtitle,
                         dateOfStart: doc.dateOfStart,
-                        posterImage: doc.posterImage,
-                        longDescrition: doc.longDescrition,
-                        shortDescrition: doc.shortDescrition,
+                        posterImage: {
+                            square: 'http://127.0.0.1:3000/uploads/' + doc.posterImage.square,
+                            wide: 'http://127.0.0.1:3000/uploads/' + doc.posterImage.wide,
+                            extraWide: 'http://127.0.0.1:3000/uploads/' + doc.posterImage.extraWide
+                        },
+                        longDescription: doc.longDescription,
+                        shortDescription: doc.shortDescription,
                         priority: doc.priority,
                         videoFragmentURL: doc.videoFragmentURL,
                         seasons: 
@@ -33,7 +37,11 @@ exports.get_all_shows = (req, res, next) => {
                                     //relatedShow: s.relatedShow,
                                     longDescription: s.longDescription,
                                     shortDescrition: s.shortDescrition,
-                                    featuredImage: s.featuredImage,
+                                    featuredImage: {
+                                        square: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.square,
+                                        wide: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.wide,
+                                        extraWide: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.extraWide
+                                    },
                                     videoFragmentURL: s.videoFragmentURL,
                                     //rating: s.rating,
                                     episodes:
@@ -45,8 +53,12 @@ exports.get_all_shows = (req, res, next) => {
                                                 //relatedShow: e.relatedShow,
                                                 //relatedSeason: e.relatedSeason 
                                                 longDescription: e.longDescription,
-                                                shortDescrition: e.shortDescrition,
-                                                featuredImage: e.featuredImage,
+                                                shortDescription: e.shortDescription,
+                                                featuredImage: {
+                                                    square: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.square,
+                                                    wide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.wide,
+                                                    extraWide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.extraWide
+                                                },
                                                 videoFragmentURL: e.videoFragmentURL,
                                                 //rating: e.rating
                                             } 
@@ -76,9 +88,13 @@ exports.get_certain_show = (req, res, next) => {
                     title: doc.title,
                     subtitle: doc.subtitle,
                     dateOfStart: doc.dateOfStart,
-                    posterImage: doc.posterImage,
-                    longDescrition: doc.longDescrition,
-                    shortDescrition: doc.shortDescrition,
+                    posterImage: {
+                        square: 'http://127.0.0.1:3000/uploads/' + doc.posterImage.square,
+                        wide: 'http://127.0.0.1:3000/uploads/' + doc.posterImage.wide,
+                        extraWide: 'http://127.0.0.1:3000/uploads/' + doc.posterImage.extraWide
+                    },
+                    longDescription: doc.longDescription,
+                    shortDescription: doc.shortDescription,
                     priority: doc.priority,
                     videoFragmentURL: doc.videoFragmentURL,
                     seasons:
@@ -89,8 +105,12 @@ exports.get_certain_show = (req, res, next) => {
                                 number: s.number,
                                 //relatedShow: s.relatedShow,
                                 longDescription: s.longDescription,
-                                shortDescrition: s.shortDescrition,
-                                featuredImage: s.featuredImage,
+                                shortDescription: s.shortDescription,
+                                featuredImage: {
+                                    square: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.square,
+                                    wide: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.wide,
+                                    extraWide: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.extraWide
+                                },
                                 videoFragmentURL: s.videoFragmentURL,
                                 //rating: s.rating,
                                 episodes:
@@ -102,8 +122,12 @@ exports.get_certain_show = (req, res, next) => {
                                             //relatedShow: e.relatedShow,
                                             //relatedSeason: e.relatedSeason 
                                             longDescription: e.longDescription,
-                                            shortDescrition: e.shortDescrition,
-                                            featuredImage: e.featuredImage,
+                                            shortDescription: e.shortDescription,
+                                            featuredImage: {
+                                                square: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.square,
+                                                wide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.wide,
+                                                extraWide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.extraWide
+                                            },
                                             videoFragmentURL: e.videoFragmentURL,
                                             //rating: e.rating
                                         }
@@ -115,7 +139,7 @@ exports.get_certain_show = (req, res, next) => {
                 res.status(404).json({ massage: 'No valid entry found for provided ID' })
             }
         })
-        .catch(err => res.status(500).json({ error: err }))  
+        .catch(err => res.status(500).json({ error: err })) 
 };
 
 exports.create_show = (req, res, next) => {
@@ -124,9 +148,13 @@ exports.create_show = (req, res, next) => {
         title: req.body.title,
         subtitle: req.body.subtitle,
         dateOfStart: req.body.dateOfStart,
-        posterImage: req.file.path,
-        longDescrition: req.body.longDescrition,
-        shortDescrition: req.body.shortDescrition,
+        posterImage: {
+            square: req.files.square[0].filename,
+            wide: req.files.wide[0].filename,
+            extraWide: req.files.extraWide[0].filename
+        }, 
+        longDescription: req.body.longDescription,
+        shortDescription: req.body.shortDescription,
         priority: req.body.priority,
         videoFragmentURL: req.body.videoFragmentURL
     });
