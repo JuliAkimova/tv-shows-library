@@ -17,3 +17,7 @@ $ npm run server
 ### MongoDB
 
 Open "config/db-keys.js" to add your MongoDB URI, local or Atlas.
+
+#### Admin 
+email: "test@test.com"
+password: "test"
