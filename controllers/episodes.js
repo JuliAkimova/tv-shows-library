@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
-// Import Show model
+const episodeTemplate = require('./templates/episode-template');
+
+// Import Models
 const Show = require('../models/show');
-
-// Import Season model
 const Season = require('../models/season');
-
-// Import Episode model
 const Episode = require('../models/episode');
 
 exports.get_all_episodes = (req, res, next) => {
@@ -19,26 +17,11 @@ exports.get_all_episodes = (req, res, next) => {
                     message: "Season not found"
                 });
             }
-            res.status(200).json({
-                episodes: season.episodes.map(e => {
-                    return {
-                        _id: e._id,
-                        name: e.name,
-                        number: e.number,
-                        relatedShow: e.relatedShow,
-                        relatedSeason: e.relatedSeason,
-                        longDescription: e.longDescription,
-                        shortDescription: e.shortDescription,
-                        featuredImage: {
-                            square: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.square,
-                            wide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.wide,
-                            extraWide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.extraWide
-                        },
-                        videoFragmentURL: e.videoFragmentURL,
-                        rating: e.rating
-                    }
-                })
-            });
+            const response = {
+                episodes: season.episodes.map(doc => episodeTemplate(doc))
+            }
+            res.status(200).json(response);
+
         })
     .catch(err => res.status(500).json({ error: err }));
 };
@@ -46,27 +29,10 @@ exports.get_all_episodes = (req, res, next) => {
 exports.get_certain_episode = (req, res, next) => {
     Episode
         .findById(req.params.episodeId)
-        //.then(episode => {console.log(episode)})
-         .then(doc => {
+        .then(doc => {
             if (doc) {
-                res.status(200).json({
-                    episode: {
-                        _id: doc._id,
-                        name: doc.name,
-                        number: doc.number,
-                        relatedShow: doc.relatedShow,
-                        relatedSeason: doc.relatedSeason,
-                        longDescription: doc.longDescription,
-                        shortDescription: doc.shortDescription,
-                        featuredImage: {
-                            square: 'http://127.0.0.1:3000/uploads/' + doc.featuredImage.square,
-                            wide: 'http://127.0.0.1:3000/uploads/' + doc.featuredImage.wide,
-                            extraWide: 'http://127.0.0.1:3000/uploads/' + doc.featuredImage.extraWide
-                        },
-                        videoFragmentURL: doc.videoFragmentURL,
-                        rating: doc.rating
-                    }
-                })
+                const response = episodeTemplate(doc);
+                res.status(200).json(response)
             } else {
                 res.status(404).json({ massage: 'No valid entry found for provided ID' })
             }

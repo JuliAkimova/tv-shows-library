@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
-// Import Show model
+const seasonTemplate = require('./templates/season-template');
+
+// Import Models
 const Show = require('../models/show');
-
-// Import Season model
 const Season = require('../models/season');
-
-// Import Episode model
 const Episode = require('../models/episode');
 
 exports.get_all_seasons = (req, res, next) => {
@@ -23,44 +21,9 @@ exports.get_all_seasons = (req, res, next) => {
                 });
             }
             const response = {
-                seasons: show.seasons.map(s => {
-                    return {
-                        _id: s._id,
-                        name: s.name,
-                        number: s.number,
-                        //relatedShow: s.relatedShow,
-                        longDescription: s.longDescription,
-                        shortDescrition: s.shortDescrition,
-                        featuredImage: {
-                            square: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.square,
-                            wide: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.wide,
-                            extraWide: 'http://127.0.0.1:3000/uploads/' + s.featuredImage.extraWide
-                        },
-                        videoFragmentURL: s.videoFragmentURL,
-                        //rating: s.rating,
-                        episodes:
-                            s.episodes.map(e => {
-                                return {
-                                    id: e._id,
-                                    number: e.number,
-                                    name: e.name,
-                                    //relatedShow: e.relatedShow,
-                                    //relatedSeason: e.relatedSeason 
-                                    longDescription: e.longDescription,
-                                    shortDescription: e.shortDescription,
-                                    featuredImage: {
-                                        square: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.square,
-                                        wide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.wide,
-                                        extraWide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.extraWide
-                                    },
-                                    videoFragmentURL: e.videoFragmentURL,
-                                    //rating: e.rating
-                                } 
-                            })
-                    }
-                })
+                seasons: show.seasons.map(s => seasonTemplate(s))
             }     
-        res.status(200).json(response);
+            res.status(200).json(response);
         })
         .catch(err => res.status(500).json({ error: err }));
 };
@@ -71,41 +34,8 @@ exports.get_certain_season = (req, res, next) => {
         .populate('episodes')
         .then(doc => {
             if (doc) {
-                res.status(200).json({
-                    season: {
-                        _id: doc._id,
-                        name: doc.name,
-                        number: doc.number,
-                        relatedShow: doc.relatedShow,
-                        longDescription: doc.longDescription,
-                        shortDescription: doc.shortDescription,
-                        featuredImage: {
-                            square: 'http://127.0.0.1:3000/uploads/' + doc.featuredImage.square,
-                            wide: 'http://127.0.0.1:3000/uploads/' + doc.featuredImage.wide,
-                            extraWide: 'http://127.0.0.1:3000/uploads/' + doc.featuredImage.extraWide
-                        },
-                        videoFragmentURL: doc.videoFragmentURL,
-                        rating: doc.rating,
-                        episodes: doc.episodes.map(e => {
-                            return {
-                                id: e._id,
-                                number: e.number,
-                                name: e.name,
-                                //relatedShow: e.relatedShow,
-                                //relatedSeason: e.relatedSeason 
-                                longDescription: e.longDescription,
-                                shortDescription: e.shortDescription,
-                                featuredImage: {
-                                    square: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.square,
-                                    wide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.wide,
-                                    extraWide: 'http://127.0.0.1:3000/uploads/' + e.featuredImage.extraWide
-                                },
-                                videoFragmentURL: e.videoFragmentURL,
-                                //rating: e.rating
-                            }
-                        })
-                    }
-                })
+                const response = seasonTemplate(doc);
+                res.status(200).json(response)
             } else {
                 res.status(404).json({ massage: 'No valid entry found for provided ID' })
             }
