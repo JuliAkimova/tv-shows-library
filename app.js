@@ -2,12 +2,29 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+
 //require routes api file
 const routes = require('./routes/api');
 const adminRoutes = require('./routes/admin');
+
 //body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+//CORS error handling
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers', 
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    res.header("Cache-Control", "no-cache, no-store, must-revalidate")
+    if(req.method === 'OPTIONS') {
+        res.header('Acces-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+        return res.status(200).json({});
+    }
+    next()
+});
 
 /** Initialize routes */
 // Everything after 'api/' will use routes object
