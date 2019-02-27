@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const seasonTemplate = require('./templates/season-template');
 
+const convert2XML = require('../routes/convert2XML');
+
 // Import Models
 const Show = require('../models/show');
 const Season = require('../models/season');
@@ -23,7 +25,11 @@ exports.get_all_seasons = (req, res, next) => {
             const response = {
                 seasons: show.seasons.map(s => seasonTemplate(s))
             }     
-            res.status(200).json(response);
+            const query = req.query.format;
+            query === 'xml'
+                ? res.set('Content-Type', 'text/xml') 
+                : res.set('Content-Type', 'application/json');
+            res.status(200).send(convert2XML(query, response)); 
         })
         .catch(err => res.status(500).json({ error: err }));
 };
@@ -35,7 +41,11 @@ exports.get_certain_season = (req, res, next) => {
         .then(doc => {
             if (doc) {
                 const response = seasonTemplate(doc);
-                res.status(200).json(response)
+                const query = req.query.format;
+                query === 'xml'
+                    ? res.set('Content-Type', 'text/xml') 
+                    : res.set('Content-Type', 'application/json');
+                res.status(200).send(convert2XML(query, response)); 
             } else {
                 res.status(404).json({ massage: 'No valid entry found for provided ID' })
             }

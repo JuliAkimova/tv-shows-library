@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const showTemplate = require('./templates/show-template')
+const showTemplate = require('./templates/show-template');
+
+const convert2XML = require('../routes/convert2XML');
 
 // Import Show model
 const Show = require('../models/show');
@@ -17,7 +19,11 @@ exports.get_all_shows = (req, res, next) => {
             const response = {
                 shows: docs.map(doc => showTemplate(doc))
             } 
-            res.status(200).json(response);
+            const query = req.query.format;
+            query === 'xml'
+                ? res.set('Content-Type', 'text/xml') 
+                : res.set('Content-Type', 'application/json');
+            res.status(200).send(convert2XML(query, response)); 
         })    
         .catch(err => res.status(404).json({ error: err }))     
 };
@@ -33,7 +39,11 @@ exports.get_certain_show = (req, res, next) => {
         .then(doc => {
             if(doc) {
                 const response = showTemplate(doc);
-                res.status(200).json(response); 
+                const query = req.query.format;
+                query === 'xml'
+                ? res.set('Content-Type', 'text/xml') 
+                : res.set('Content-Type', 'application/json');
+                res.status(200).send(convert2XML(query, response)); 
             } else {
                 res.status(404).json({ massage: 'No valid entry found for provided ID' })
             }

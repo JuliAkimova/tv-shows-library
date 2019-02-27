@@ -34,5 +34,34 @@ tv-shows folder contains database dump in BSON format.
 
 #### Admin collection
 
-email: "test@test.com"
+email: "test@test.com" <br />
 password: "test"
+
+### API
+
+Returns json data about all shows.
+
+* **URL**
+
+`http:127.0.0.1:3000/api/shows`
+
+* **Method:**
+
+`GET`
+  
+*  **URL Query Parameters**
+
+By default API returns data in JSON format.
+To get data in XML, add query parameter at the end of the URL string.
+
+`http://127.0.0.1:3000/api/shows?format=xml`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Shows:** `{ title: "WestWorld" , posterImage : {...} }`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "Route not found" }`

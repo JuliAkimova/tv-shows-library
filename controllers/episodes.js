@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const episodeTemplate = require('./templates/episode-template');
 
+const convert2XML = require('../routes/convert2XML');
+
 // Import Models
 const Show = require('../models/show');
 const Season = require('../models/season');
@@ -20,7 +22,11 @@ exports.get_all_episodes = (req, res, next) => {
             const response = {
                 episodes: season.episodes.map(doc => episodeTemplate(doc))
             }
-            res.status(200).json(response);
+            const query = req.query.format;
+            query === 'xml'
+                ? res.set('Content-Type', 'text/xml') 
+                : res.set('Content-Type', 'application/json');
+            res.status(200).send(convert2XML(query, response)); 
 
         })
     .catch(err => res.status(500).json({ error: err }));
@@ -32,7 +38,11 @@ exports.get_certain_episode = (req, res, next) => {
         .then(doc => {
             if (doc) {
                 const response = episodeTemplate(doc);
-                res.status(200).json(response)
+                const query = req.query.format;
+                query === 'xml'
+                    ? res.set('Content-Type', 'text/xml') 
+                    : res.set('Content-Type', 'application/json');
+                res.status(200).send(convert2XML(query, response)); 
             } else {
                 res.status(404).json({ massage: 'No valid entry found for provided ID' })
             }
