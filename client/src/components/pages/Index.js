@@ -1,10 +1,10 @@
 import React from 'react';
-import Shows from './shows/Shows';
+import ShowList from './ShowList';
 
 const Index = () => {
     return (
         <React.Fragment>
-            <Shows />
+            <ShowList />
         </React.Fragment>
     )
 };
