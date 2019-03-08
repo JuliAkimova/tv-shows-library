@@ -6,7 +6,10 @@ const app = require('./app');
 const DB = require('./config/db-keys').mongoURI;
 
 mongoose
-    .connect(DB)
+    .connect(DB, {
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.log(err));
 
