@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"tv-shows.admins"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","background":true,"ns":"tv-shows.admins"}],"uuid":"269206dbbbb34b6cbed6d91a23f68e14"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"tv-shows.admins"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","background":true,"ns":"tv-shows.admins"}],"uuid":"3de5f1a85d1a4f2f9a782f3fbb291609"}

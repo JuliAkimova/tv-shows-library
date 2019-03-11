@@ -21,7 +21,7 @@ $ npm run client
 $ npm run dev
 
 # Also to install dependencies for client side
-$ npm run client
+$ npm run client-install
 
 # Server runs on http://127.0.0.1:3000
 # Client runs on localhost:3001
