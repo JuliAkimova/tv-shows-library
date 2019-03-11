@@ -2,7 +2,6 @@ import React from 'react';
 import { Consumer } from '../../context';
 import Spinner from '../shared/Spinner';
 import Show from './Show';
-import '../../styles/showlist.scss';
 
 const ShowList = () => {
     return (

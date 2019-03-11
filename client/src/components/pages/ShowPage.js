@@ -1,7 +1,7 @@
 import { Consumer } from '../../context';
 import React from 'react';
 import SeasonList from './SeasonList';
-import '../../styles/page.scss';
+import ReactPlayer from 'react-player';
 
 const  ShowPage = ({ match, value }) =>{
     const { show_list } = value;
@@ -15,12 +15,19 @@ const  ShowPage = ({ match, value }) =>{
                     alt={show.title}
                 /> 
             </div>
-            <h2>{show.title}</h2>
-            <h4>{show.priority}</h4>
-            <div className='items'>
-                <SeasonList show={show} />
+            <div className='title'>
+                <h2>{show.title}</h2>
             </div>
-                             
+            <div className='video-fragment'>
+                <ReactPlayer 
+                    url={show.videoFragmentURL}
+                    controls
+                    playing={false}
+                    width='90%'
+                />
+            </div>
+            <div className='description'>{show.longDescription}</div> 
+            <SeasonList show={show} />
         </div>
     )
 };
@@ -41,5 +48,8 @@ const Data = (props) => (
 );
 
 export default Data;
+
+
+
 
 

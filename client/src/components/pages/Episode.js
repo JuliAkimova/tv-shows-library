@@ -1,19 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-export default function Episode({ episode, season }) {
+const Episode = ({ episode, season }) => {
     return (
-        <div>
-            <div>
-                <h2>{episode.name}</h2>
-                <h2>{episode.number}</h2>
-                <Link to={`season_${season.number}/episode_${episode.number}`}> >
-                    <img
-                        src={episode.featuredImage.square}
-                        alt='Poster'
-                    />
-                </Link>
+        <div className='subitem'>
+            <div className='content'>
+                <Link to={`season_${season.number}/episode_${episode.number}`}>
+                        <div className='content-overlay'></div>
+                        <img
+                            src={ episode.featuredImage.square }
+                            alt={`season ${episode.number}`}
+                            className='content-image'
+                        /> 
+                        <div className='content-details fadeIn-bottom'>
+                            <h3 className='content-title'>{ `episode ${episode.number}` }</h3>
+                            <p className='content-text'>Learn more...</p>
+                        </div>
+                    </Link>
             </div>
         </div>
     )
-}
+};
+
+export default Episode;

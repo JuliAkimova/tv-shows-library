@@ -1,0 +1,111 @@
+@import 'config';
+
+// Desktop & laptop screens
+@include mediaLg {
+    .show-container {
+        padding: 60px;
+    }
+
+    .page-container {
+        padding: 0 60px;
+        grid-template-areas: 
+            'featured-img featured-img featured-img featured-img'
+            'title video video video'
+            'go-back video video video'
+            'description description description description'
+            'subitems subitems subitems subitems'
+    }
+}
+
+// Tablets & small laptops
+@include mediaMd {
+    .show-container {
+        padding: 30px;
+        grid-template-areas: 
+            'show-item-1'
+            'show-item-2'
+            'show-item-3'
+            'show-item-4'
+            'show-item-5'
+            'show-item-6'
+            'show-item-7'
+            'show-item-8'
+            'show-item-9'
+            'show-item-10'
+            'show-item-11'
+            'show-item-12';
+    }
+    .page-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 450px 50px 150px 150px 150px 500px;
+        grid-template-areas: 
+            'featured-img featured-img'
+            'title'
+            'video video'
+            'video video video'
+            'description description'
+            'subitems subitems'
+    }
+
+    .video-fragment {
+        justify-content: flex-end;
+    }
+
+    .subitems {
+        grid-template-areas: 
+            'subitem-1 subitem-2'
+            'subitem-3 subitem-4'
+            'subitem-5 subitem-6'
+            'subitem-7 subitem-8'
+    }
+}
+
+// Smartphones
+@include mediaSm {
+    .show-container {
+        align-items: center;
+        grid-template-areas: 
+            'show-item-1'
+            'show-item-2'
+            'show-item-3'
+            'show-item-4'
+            'show-item-5'
+            'show-item-6'
+            'show-item-7'
+            'show-item-8'
+            'show-item-9'
+            'show-item-10'
+            'show-item-11'
+            'show-item-12';
+    }
+
+    .page-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 200px 50px 300px 600px 800px;
+        grid-template-areas: 
+            'featured-img'
+            'title'
+            'video'
+            'description'
+            'subitems'
+    }
+
+    .subitems {
+        grid-template-areas: 
+            'subitem-1'
+            'subitem-2'
+            'subitem-3'
+            'subitem-4'
+            'subitem-5'
+            'subitem-6'
+            'subitem-7'
+            'subitem-8'
+    }
+ 
+    .video-fragment {
+        grid-area: video;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+}

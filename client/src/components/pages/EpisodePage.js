@@ -1,5 +1,7 @@
 import { Consumer } from '../../context';
 import React from 'react';
+import ReactPlayer from 'react-player';
+
 
 const EpisodePage = ({ match, value }) => {
     const { show_list } = value;
@@ -9,13 +11,27 @@ const EpisodePage = ({ match, value }) => {
         .episodes.find(({ number }) => number === parseInt(match.params.episodeNumber.split('_')[1]));
 
     return (
-        <div>
-            <h2>{episode.name}</h2>
-            <h4>{episode.number}</h4>
-            <img
-                src={episode.featuredImage.wide}
-                alt='Poster'
-            />
+        <div className='page-container'>
+           <div className='featured-img'>
+                <img
+                    src={episode.featuredImage.wide}
+                    alt='Poster'
+                />
+           </div>
+           <div className='title'>
+               <h2>{episode.name}</h2>
+           </div>
+           <div className='video-fragment'>
+                <ReactPlayer 
+                    url={episode.videoFragmentURL}
+                    controls
+                    playing={false}
+                    width='90%'
+                />
+            </div>
+            <div className='description'>{episode.longDescription}</div> 
+
+            
         </div>
     )
 };

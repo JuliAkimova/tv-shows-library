@@ -3,18 +3,20 @@ import { Link } from 'react-router-dom';
 
 const Season = ({ season, show }) => {
     return (
-        <div>
-            <div>
-                <h2>{season.name}</h2>
-                <h2>{season.number}</h2>
-            </div>
-            <div>
+        <div className='subitem'>
+            <div className='content'>
                 <Link 
                     to={`${show.title}/season_${season.number}`}> 
+                    <div className='content-overlay'></div>
                     <img
                         src={ season.featuredImage.square }
-                        alt='Poster'
-                    />
+                        alt={`season ${season.number}`}
+                        className='content-image'
+                    /> 
+                    <div className='content-details fadeIn-bottom'>
+                        <h3 className='content-title'>{ `season ${season.number}` }</h3>
+                        <p className='content-text'>Learn more...</p>
+                    </div>
                 </Link>
             </div>
         </div>

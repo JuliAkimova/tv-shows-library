@@ -43,29 +43,33 @@ class Login extends Component {
 
     render() {
         return (
-            <form 
-                autoComplete='off'
-                onSubmit={this.handleSubmit}
-                >
-                <h2>LogIn</h2>
-                <input 
-                    type='email'
-                    name='email'
-                    placeholder='email...'
-                    value={this.state.email}
-                    onChange={this.handleInput}
-                    required
-                />
-                <input
-                    type='password'
-                    name='password'
-                    placeholder='password'
-                    value={this.state.password}
-                    onChange={this.handleInput}
-                    required
-                />   
-                <input type='submit' value='submit' /> 
-            </form>
+            <div className='form-container'>
+                <form 
+                    autoComplete='off'
+                    onSubmit={this.handleSubmit}
+                    >
+                    <h2 className='form-header'>LogIn</h2>
+                    <div className='form-body'>
+                        <input 
+                            type='email'
+                            name='email'
+                            placeholder='email...'
+                            value={this.state.email}
+                            onChange={this.handleInput}
+                            required
+                        />
+                        <input
+                            type='password'
+                            name='password'
+                            placeholder='password'
+                            value={this.state.password}
+                            onChange={this.handleInput}
+                            required
+                        />   
+                        <input type='submit' value='submit' /> 
+                    </div>
+                </form>
+            </div>
         )
     }
 };

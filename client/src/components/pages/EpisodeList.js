@@ -3,15 +3,17 @@ import Episode from './Episode';
 
 const EpisodeList = ({ season }) => {
     return (
-        <React.Fragment>
-            {season.episodes.map(item => (
-                <Episode
-                    key={item.number}
-                    episode={item}
-                    season={season}
-                />
-            ))}
-        </React.Fragment>  
+        <div className='subitems-container'>
+            <div className='subitems'>
+                {season.episodes.map(item => (
+                    <Episode
+                        key={item.number}
+                        episode={item}
+                        season={season}
+                    />
+                ))}
+            </div>
+        </div>  
     )
 };
 
