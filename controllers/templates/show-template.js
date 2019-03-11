@@ -2,7 +2,6 @@ const seasonTemplate = require('./season-template');
 
 module.exports = (item) => {
 	return {
-		_id: item._id,
 		title: item.title,
 		subtitle: item.subtitle,
  		dateOfStart: item.dateOfStart,

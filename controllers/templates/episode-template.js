@@ -1,6 +1,5 @@
 module.exports = (item) => {
     return {
-        _id: item._id,
         name: item.name,
         number: item.number,
         relatedShow: item.relatedShow,
